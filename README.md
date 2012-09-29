@@ -21,7 +21,7 @@ You can also use it like ExpandoObject, with multi level property support. To st
 
 You can create dynamic objects with multiple levels of properties. ElasticObject has got its own conventions ;)
 
-```
+```c#
     dynamic CreateStoreObject()
         {
             dynamic store = new ElasticObject("Store");
@@ -52,7 +52,7 @@ You can create dynamic objects with multiple levels of properties. ElasticObject
 
 Now, you can convert this to XML quite easily, using the > operator. You can convert the XML back to elasticobject as well. See below.
 
-```
+```c#
             var store = CreateStoreObject();
             XElement el = store > FormatType.Xml;
             dynamic storeClone = el.ToElastic();
@@ -69,7 +69,7 @@ It is pretty easy to use ElasticObject to traverse XML. For example, here is a C
 
 Note the ToElastic extension method available for converting XElements to an ElasticObject
 
-```
+```c#
 class Program
     {
         static void Main(string[] args)
