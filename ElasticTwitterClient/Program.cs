@@ -14,13 +14,9 @@ namespace ElasticTwitterClient
     {
         static void Main(string[] args)
         {
-
-            
- 
-
-            WebClient cl=new WebClient();
+            var cl=new WebClient();
             Console.WriteLine("Reading public time line");
-            using (StreamReader r = new StreamReader
+            using (var r = new StreamReader
                 (cl.OpenRead(@"http://twitter.com/statuses/user_timeline/amazedsaint.xml")))
             {
                 var data = r.ReadToEnd();
