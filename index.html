@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Elasticobject by amazedsaint</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Elasticobject</h1>
+          <h2>An Expandable dynamic object for .NET 4.0 +</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/amazedsaint/ElasticObject/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/amazedsaint/ElasticObject/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/amazedsaint/ElasticObject" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>ElasticObject</h1>
+
+<p>ElasticObject is a multi level dynamic object implementation using .NET 4.0 dynamic features, for fluent access of data types like XML. </p>
+
+<p>For example, consider the XML </p>
+
+<blockquote>
+<p>&lt;entry name="user"/&gt; </p>
+</blockquote>
+
+<p>One possible use of ElasticObject is, you can access the same using fluent dynamic wrappers, like </p>
+
+<blockquote>
+<p>var n=entry.name; </p>
+</blockquote>
+
+<p>You can also use it like ExpandoObject, with multi level property support. To start with, here are few scenarios you can use ElasticObject</p>
+
+<ul>
+<li>An easier, fluid way to work with data formats – like XML and JSON. Presently, we’ve some support for XML.</li>
+<li>Cleaner code though it is duck typed</li>
+<li>A hierarchical way to maintain loosely typed data.</li>
+</ul><h3>How to use ElasticObject</h3>
+
+<p>You can create dynamic objects with multiple levels of properties. ElasticObject has got its own conventions ;)</p>
+
+<div class="highlight"><pre>    <span class="kt">dynamic</span> <span class="nf">CreateStoreObject</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">dynamic</span> <span class="n">store</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ElasticObject</span><span class="p">(</span><span class="s">"Store"</span><span class="p">);</span>
+            <span class="n">store</span><span class="p">.</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Acme Store"</span><span class="p">;</span>
+            <span class="n">store</span><span class="p">.</span><span class="n">Location</span><span class="p">.</span><span class="n">Address</span> <span class="p">=</span> <span class="s">"West Avenue, Heaven Street Road, LA"</span><span class="p">;</span>
+            <span class="n">store</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="n">Count</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
+
+            <span class="n">store</span><span class="p">.</span><span class="n">Owner</span><span class="p">.</span><span class="n">FirstName</span> <span class="p">=</span> <span class="s">"Jack"</span><span class="p">;</span>
+            <span class="n">store</span><span class="p">.</span><span class="n">Owner</span><span class="p">.</span><span class="n">SecondName</span> <span class="p">=</span> <span class="s">"Jack"</span><span class="p">;</span>
+
+            <span class="c1">//try to set the internal content for an element</span>
+            <span class="n">store</span><span class="p">.</span><span class="n">Owner</span> <span class="p">&lt;&lt;=</span> <span class="s">"this is some internal content for owner"</span><span class="p">;</span>
+
+            <span class="c1">//Add a new product</span>
+            <span class="kt">var</span> <span class="n">p1</span> <span class="p">=</span> <span class="n">store</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="n">Product</span><span class="p">();</span>
+            <span class="n">p1</span><span class="p">.</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Acme Floor Cleaner"</span><span class="p">;</span>
+            <span class="n">p1</span><span class="p">.</span><span class="n">Price</span> <span class="p">=</span> <span class="m">20</span><span class="p">;</span>
+
+            <span class="c1">//Add another product</span>
+            <span class="kt">var</span> <span class="n">p2</span> <span class="p">=</span> <span class="n">store</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="n">Product</span><span class="p">();</span>
+            <span class="n">p2</span><span class="p">.</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Acme Bun"</span><span class="p">;</span>
+            <span class="n">p2</span><span class="p">.</span><span class="n">Price</span> <span class="p">=</span> <span class="m">22</span><span class="p">;</span>
+
+            <span class="k">return</span> <span class="n">store</span><span class="p">;</span>
+
+        <span class="p">}</span>
+</pre></div>
+
+<p>Now, you can convert this to XML quite easily, using the &gt; operator. You can convert the XML back to elasticobject as well. See below.</p>
+
+<div class="highlight"><pre>            <span class="kt">var</span> <span class="n">store</span> <span class="p">=</span> <span class="n">CreateStoreObject</span><span class="p">();</span>
+            <span class="n">XElement</span> <span class="n">el</span> <span class="p">=</span> <span class="n">store</span> <span class="p">&gt;</span> <span class="n">FormatType</span><span class="p">.</span><span class="n">Xml</span><span class="p">;</span>
+            <span class="kt">dynamic</span> <span class="n">storeClone</span> <span class="p">=</span> <span class="n">el</span><span class="p">.</span><span class="n">ToElastic</span><span class="p">();</span>
+            <span class="n">XElement</span> <span class="n">elCopy</span> <span class="p">=</span> <span class="n">storeClone</span> <span class="p">&gt;</span> <span class="n">FormatType</span><span class="p">.</span><span class="n">Xml</span><span class="p">;</span>
+            <span class="n">Assert</span><span class="p">.</span><span class="n">AreEqual</span><span class="p">(</span><span class="n">el</span><span class="p">.</span><span class="n">ToString</span><span class="p">(),</span> <span class="n">elCopy</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+</pre></div>
+
+<p>See the unit tests for more examples.           </p>
+
+<h3>Using ElasticObject for traversing XML</h3>
+
+<p>It is pretty easy to use ElasticObject to traverse XML. For example, here is a Console client that gets my Twitter timeline as XML, and print some properties.</p>
+
+<p>Note the ToElastic extension method available for converting XElements to an ElasticObject</p>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">cl</span><span class="p">=</span><span class="k">new</span> <span class="n">WebClient</span><span class="p">();</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">"Reading public time line"</span><span class="p">);</span>
+            <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">r</span> <span class="p">=</span> <span class="k">new</span> <span class="n">StreamReader</span>
+                <span class="p">(</span><span class="n">cl</span><span class="p">.</span><span class="n">OpenRead</span><span class="p">(</span><span class="s">@"http://twitter.com/statuses/user_timeline/amazedsaint.xml"</span><span class="p">)))</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">r</span><span class="p">.</span><span class="n">ReadToEnd</span><span class="p">();</span>
+                <span class="n">IterateTweets</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">ReadLine</span><span class="p">();</span>
+
+        <span class="p">}</span>
+
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">IterateTweets</span><span class="p">(</span><span class="kt">string</span> <span class="n">data</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">dynamic</span> <span class="n">root</span> <span class="p">=</span> <span class="n">XElement</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">data</span><span class="p">).</span><span class="n">ToElastic</span><span class="p">();</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">s</span> <span class="k">in</span> <span class="n">root</span><span class="p">[</span><span class="s">"status"</span><span class="p">])</span>
+            <span class="p">{</span>
+                <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(~</span><span class="n">s</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="n">screen_name</span> <span class="p">+</span> <span class="s">" - "</span> <span class="p">+</span> <span class="p">~</span><span class="n">s</span><span class="p">.</span><span class="n">text</span><span class="p">);</span>
+                <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+</pre></div>
+
+<h3>Using ElasticObject for XML driven T4 Code generation in Visual Studio</h3>
+
+<p>You can use ElasticObject to generate code using T4 from simple XML files. To install AmazedSaint.ElasticObject package from nuget, run the following command in the Package Manager Console</p>
+
+<blockquote>
+<p>Install-Package AmazedSaint.ElasticObject</p>
+</blockquote>
+
+<p>Or you can install this via the Nuget Package manager, it is your choice. See the example once you install the package.</p>
+
+<h3>More</h3>
+
+<ul>
+<li><a href="http://www.amazedsaint.com/2010/02/introducing-elasticobject-for-net-40.html">Introduction To ElasticObject</a></li>
+<li><a href="http://www.amazedsaint.com/2012/02/xml-driven-ct4-code-generation-with.html">XML driven Code Generation using T4 and ElasticObject</a></li>
+</ul>
+        </section>
+
+        <footer>
+          Elasticobject is maintained by <a href="https://github.com/amazedsaint">amazedsaint</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
