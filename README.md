@@ -6,7 +6,7 @@ For example, consider the XML
 
 > &lt;entry name="user"/&gt; 
 
-You can access the same using fluent dynamic wrappers, like 
+One possible use of ElasticObject is, you can access the same using fluent dynamic wrappers, like 
 
 > var n=entry.name; 
 
