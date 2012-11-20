@@ -5,6 +5,7 @@ using System.Text;
 using System.Dynamic;
 using System.Linq.Expressions;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace AmazedSaint.Elastic.Lib
 {
@@ -95,8 +96,13 @@ namespace AmazedSaint.Elastic.Lib
 
             foreach (var a in args)
             {
-                foreach(var p in a.GetType().GetProperties())
+#if NETFX_CORE
+                foreach(var p in a.GetType().GetTypeInfo().DeclaredProperties)
                     AddAttribute(p.Name,p.GetValue(a,null));
+#else
+                foreach (var p in a.GetType().GetProperties())
+                    AddAttribute(p.Name,p.GetValue(a,null));
+#endif
             }
 
             AddElement(obj);
