@@ -12,7 +12,7 @@ One possible use of ElasticObject is, you can access the same using fluent dynam
 
 You can also use it like ExpandoObject, with multi level property support. To start with, here are few scenarios you can use ElasticObject
 
-* An easier, fluid way to work with data formats – like XML and JSON. Presently, we’ve some support for XML.
+* An easier, fluid way to work with data formats ï¿½ like XML and JSON. Presently, weï¿½ve some support for XML.
 * Cleaner code though it is duck typed
 * A hierarchical way to maintain loosely typed data.
 
@@ -113,3 +113,8 @@ Or you can install this via the Nuget Package manager, it is your choice. See th
 
 * [Introduction To ElasticObject] (http://www.amazedsaint.com/2010/02/introducing-elasticobject-for-net-40.html)
 * [XML driven Code Generation using T4 and ElasticObject] (http://www.amazedsaint.com/2012/02/xml-driven-ct4-code-generation-with.html)
+
+### Update ###
+
+* [Ariel Ben] (https://twitter.com/ArielBH) added Metro Support, and added a Portable library project file for your convinience 
+
