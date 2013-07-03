@@ -116,5 +116,5 @@ Or you can install this via the Nuget Package manager, it is your choice. See th
 
 ### Update ###
 
-* [Ariel Ben] (https://twitter.com/ArielBH) added Metro Support, and added a Portable library project file for your convinience 
+* [Ariel Ben] (https://twitter.com/ArielBH) added Metro Support, and added a Portable library project file for your convenience 
 
