@@ -75,17 +75,30 @@ namespace AmazedSaint.Elastic
         /// Returns an XElement from an ElasticObject
         /// </summary>
         /// <param name="elastic"></param>
+        /// <param name="nameSpace"></param>
         /// <returns></returns>
-        public static XElement XElementFromElastic(ElasticObject elastic)
+        public static XElement XElementFromElastic(ElasticObject elastic, XNamespace nameSpace = null)
         {
-
-            var exp = new XElement(elastic.InternalName);
+            // we default to empty namespace
+            nameSpace = nameSpace ?? string.Empty;
+            var exp = new XElement(nameSpace + elastic.InternalName);
 
 
             foreach (var a in elastic.Attributes)
             {
-                    if (a.Value.InternalValue != null)
+                if (a.Value.InternalValue != null)
+                {
+                    // if we have xmlns attribute add it like XNamespace instead of regular attribute
+                    if (a.Key.Equals("xmlns", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        nameSpace = a.Value.InternalValue.ToString();
+                        exp.Name = nameSpace.GetName(exp.Name.LocalName);
+                    }
+                    else
+                    {
                         exp.Add(new XAttribute(a.Key, a.Value.InternalValue));
+                    }
+                }
             }
 
             if (null != elastic.InternalContent && elastic.InternalContent is string)
@@ -95,7 +108,8 @@ namespace AmazedSaint.Elastic
 
             foreach (var c in elastic.Elements)
             {
-                    var child = XElementFromElastic(c);
+                    // for child element add current XNamespace
+                    var child = XElementFromElastic(c, nameSpace);
                     exp.Add(child);
             }
             return exp;
