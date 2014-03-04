@@ -222,5 +222,31 @@ namespace AmazedSaint.Elastic.Tests
 
         }
 
+        private XElement CreateTestXElementWithNamespaces()
+        {
+            string data = @"<Store Name=""Acme Store"" xmlns=""http://example.com/store/v1-0"">
+<Location Address= ""West Avenue"" />
+<Products Count=""1""  xmlns=""http://example.com/products/v1-0"">
+    <Product Name =""Acme Bun"" />
+</Products>
+<Owner>Content</Owner>
+</Store>";
+
+            return XElement.Parse(data);
+        }
+
+        [TestMethod]
+        [Description("Test to verify xmlnamespace support")]
+        public void Check_Namespace_Support()
+        {
+            var el = CreateTestXElementWithNamespaces();
+            var elastic = el.ToElastic();
+
+            XElement testcase = elastic > FormatType.Xml;
+
+            // ToString() should throw excepton if no Namespace support
+            var data = testcase.ToString();
+        }
+
     }
 }
