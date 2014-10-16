@@ -89,7 +89,7 @@ namespace AmazedSaint.Elastic
                 if (a.Value.InternalValue != null)
                 {
                     // if we have xmlns attribute add it like XNamespace instead of regular attribute
-                    if (a.Key.Equals("xmlns", StringComparison.InvariantCultureIgnoreCase))
+					if (a.Key.Equals("xmlns", StringComparison.OrdinalIgnoreCase))
                     {
                         nameSpace = a.Value.InternalValue.ToString();
                         exp.Name = nameSpace.GetName(exp.Name.LocalName);
