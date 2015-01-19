@@ -1,5 +1,7 @@
 # ElasticObject #
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/amazedsaint/ElasticObject?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ElasticObject is a multi level dynamic object implementation using .NET 4.0 dynamic features, for fluent access of data types like XML. 
 
 For example, consider the XML 
